@@ -1,0 +1,46 @@
+{
+  "name": "node-superhero-service",
+  "version": "0.0.0",
+  "description": "Playground for testing node CRUD service development",
+  "homepage": "http://github.com/tomave/node-superhero-service",
+  "author": {
+    "name": "Tomas Ave",
+    "email": "tomave82@gmail.com",
+    "url": "http://tomave.github.io"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "keywords": [
+    "node",
+    "crud",
+    "express",
+    "mongodb",
+    "rest"
+  ],
+  "repository": "tomave/node-superhero-service",
+  "devDependencies": {
+    "babel-core": "^5.5.0",
+    "del": "^2.0.2",
+    "express": "^4.13.3",
+    "gulp": "^3.6.0",
+    "gulp-apidocjs": "^0.1.3",
+    "gulp-babel": "^5.1.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-nsp": "^0.4.5",
+    "gulp-plumber": "^1.0.0",
+    "isparta": "^3.0.3",
+    "mongoose": "^4.1.12",
+    "supertest": "^1.1.0"
+  },
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "Apache-2.0"
+}
