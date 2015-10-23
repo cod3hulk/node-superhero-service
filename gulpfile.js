@@ -7,6 +7,7 @@ var istanbul = require('gulp-istanbul');
 var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
 var babel = require('gulp-babel');
+var nodemon = require('gulp-nodemon');
 var del = require('del');
 var isparta = require('isparta');
 
@@ -59,6 +60,15 @@ gulp.task('babel', ['clean'], function () {
 gulp.task('clean', function () {
   return del('dist');
 });
+
+gulp.task('start', function () {
+    nodemon({
+        script: 'server.js',
+        ext: 'js',
+        env: { 'NODE_ENV': 'development' }
+    })
+});
+
 
 gulp.task('prepublish', ['nsp', 'babel']);
 gulp.task('default', ['static', 'test']);
