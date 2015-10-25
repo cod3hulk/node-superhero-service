@@ -1,14 +1,13 @@
+var mongoose = require('mongoose');
 var app = require('./app.js');
 
-var port = process.env.PORT || 3000
-global.host = 'http://localhost';
-global.port = port;
-global.url = global.host + ':' + global.port;
+mongoose.connect('mongodb://192.168.59.103:32768/superhero');
 
+var port = process.env.PORT || 3000
 var server = app.listen(port, err => {
   if (err) {
     console.err(err);
   }
-  console.log('Listening to: ' + global.url);
+  console.log('Listening to: ' + 'http://localhost:3000');
 });
 
