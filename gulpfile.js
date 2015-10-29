@@ -8,6 +8,7 @@ var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
 var babel = require('gulp-babel');
 var nodemon = require('gulp-nodemon');
+var apidoc = require('gulp-apidocjs');
 var del = require('del');
 var isparta = require('isparta');
 
@@ -69,6 +70,14 @@ gulp.task('start', function () {
     })
 });
 
+gulp.task('apidoc', function (cb) {
+  apidoc.exec({
+    src: "routes/",
+    dest: "docs/",
+    debug: true,
+    includeFilters: [ ".*\\.js$" ]
+  }, cb);
+});
 
 gulp.task('prepublish', ['nsp', 'babel']);
 gulp.task('default', ['static', 'test']);
