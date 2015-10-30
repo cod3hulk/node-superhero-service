@@ -64,7 +64,8 @@ function create(req, res, next) {
       return next(err);
     }
     res.status(201)
-      .json({ message: 'Superhero added', data: superhero });
+      .location('/superheroes/' + superhero.id)
+      .send();
   })
 }
 
@@ -84,7 +85,7 @@ function remove(req, res, next) {
       return next(err);
     }
     res.status(200)
-      .json();
+      .send();
   })
 }
 
