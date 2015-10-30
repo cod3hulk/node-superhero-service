@@ -10,17 +10,15 @@ var Superhero = require('../models/superhero.js');
  *
  * @apiSuccess {Object} requested superhero
  */
-function findById(req, res) {
+function findById(req, res, next) {
   Superhero.findById(req.params.id, (err, superhero) => {
     if (err) {
-      res.status(500)
-        .send(err);
-      return;
+      res.status(500);
+      return next(err);
     }
     if (superhero === null) {
-      res.status(404)
-        .send();
-      return;
+      res.status(404);
+      return next();
     }
     res.status(200)
       .json(superhero);
@@ -34,12 +32,11 @@ function findById(req, res) {
  *
  * @apiSuccess {Object} all requested superheros
  */
-function findAll(req, res) {
+function findAll(req, res, next) {
   Superhero.find((err, superheroes) => {
     if (err) {
       res.status(500)
-        .send(err);
-      return;
+      return next(err);
     }
     res.status(200)
       .json(superheroes);
@@ -56,7 +53,7 @@ function findAll(req, res) {
  *
  * @apiSuccess {Object} created superhero
  */
-function create(req, res) {
+function create(req, res, next) {
   var superhero = new Superhero();
   superhero.name = req.body.name;
   superhero.universe = req.body.universe;
@@ -64,21 +61,42 @@ function create(req, res) {
   superhero.save(err => {
     if (err) {
       res.status(500)
-        .send(err);
-      return;
+      return next(err);
     }
     res.status(201)
       .json({ message: 'Superhero added', data: superhero });
   })
+}
 
+/**
+ * @api {delete} /superheroes Delete an existing superhero
+ * @apiName DeleteSuperhero
+ * @apiGroup Superhero
+ *
+ * @apiParam {Number} id ID of superhero to be deleted
+ *
+ * @apiSuccess {Object} created superhero
+ */
+function remove(req, res, next) {
+  Superhero.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.status(500);
+      return next(err);
+    }
+    res.status(200)
+      .json();
+  })
 }
 
 var routes = express.Router();
+
 routes.route('/superheroes')
   .post(create)
   .get(findAll);
+
 routes.route('/superheroes/:id')
-  .get(findById);
+  .get(findById)
+  .delete(remove);
 
 module.exports = routes;
 
