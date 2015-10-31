@@ -22,7 +22,7 @@ function findById(req, res, next) {
     }
     res.status(200)
       .json(superhero);
-  })
+  });
 }
 
 /**
@@ -35,7 +35,7 @@ function findById(req, res, next) {
 function findAll(req, res, next) {
   Superhero.find((err, superheroes) => {
     if (err) {
-      res.status(500)
+      res.status(500);
       return next(err);
     }
     res.status(200)
@@ -60,13 +60,13 @@ function create(req, res, next) {
 
   superhero.save(err => {
     if (err) {
-      res.status(500)
+      res.status(500);
       return next(err);
     }
     res.status(201)
       .location('/superheroes/' + superhero.id)
       .send();
-  })
+  });
 }
 
 /**
@@ -86,10 +86,10 @@ function remove(req, res, next) {
     }
     res.status(200)
       .send();
-  })
+  });
 }
 
-var routes = express.Router();
+var routes = new express.Router();
 
 routes.route('/superheroes')
   .post(create)

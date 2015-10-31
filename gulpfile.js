@@ -12,18 +12,15 @@ var apidoc = require('gulp-apidocjs');
 var del = require('del');
 var isparta = require('isparta');
 
-var sources = [
-    'routes/**/*.js',
-    'models/**/*.js',
-    'app.js'
-];
-
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded
 require('babel-core/register');
 
 gulp.task('static', function () {
-  return gulp.src('**/*.js')
+  return gulp.src([
+      'src/**/*.js',
+      'test/**/*.js',
+  ])
     .pipe(excludeGitignore())
     .pipe(eslint())
     .pipe(eslint.format())
@@ -35,7 +32,7 @@ gulp.task('nsp', function (cb) {
 });
 
 gulp.task('pre-test', function () {
-  return gulp.src(sources)
+  return gulp.src('src/**/*.js')
     .pipe(istanbul({
       includeUntested: true
 ,      instrumenter: isparta.Instrumenter
@@ -59,11 +56,14 @@ gulp.task('test', ['pre-test'], function (cb) {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(sources.concat('test/**/*.js'), ['test']);
+  gulp.watch([
+    'src/**/*.js',
+    'test/**/*.js',
+  ], ['test']);
 });
 
 gulp.task('babel', ['clean'], function () {
-  return gulp.src(sources)
+  return gulp.src('src/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('dist'));
 });
@@ -74,7 +74,7 @@ gulp.task('clean', function () {
 
 gulp.task('start', function () {
     nodemon({
-        script: 'app.js',
+        script: 'src/app.js',
         ext: 'js',
         env: { 'NODE_ENV': 'development' }
     })
@@ -82,7 +82,7 @@ gulp.task('start', function () {
 
 gulp.task('apidoc', function (cb) {
   apidoc.exec({
-    src: "routes/",
+    src: "src/routes/",
     dest: "docs/",
     debug: true,
     includeFilters: [ ".*\\.js$" ]
