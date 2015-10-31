@@ -12,6 +12,12 @@ var apidoc = require('gulp-apidocjs');
 var del = require('del');
 var isparta = require('isparta');
 
+var sources = [
+    'routes/**/*.js',
+    'models/**/*.js',
+    'app.js'
+];
+
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded
 require('babel-core/register');
@@ -29,7 +35,7 @@ gulp.task('nsp', function (cb) {
 });
 
 gulp.task('pre-test', function () {
-  return gulp.src('lib/**/*.js')
+  return gulp.src(sources)
     .pipe(istanbul({
       includeUntested: true
 ,      instrumenter: isparta.Instrumenter
@@ -52,8 +58,12 @@ gulp.task('test', ['pre-test'], function (cb) {
     });
 });
 
+gulp.task('watch', function () {
+  gulp.watch(sources.concat('test/**/*.js'), ['test']);
+});
+
 gulp.task('babel', ['clean'], function () {
-  return gulp.src('lib/**/*.js')
+  return gulp.src(sources)
     .pipe(babel())
     .pipe(gulp.dest('dist'));
 });
@@ -64,7 +74,7 @@ gulp.task('clean', function () {
 
 gulp.task('start', function () {
     nodemon({
-        script: 'server.js',
+        script: 'app.js',
         ext: 'js',
         env: { 'NODE_ENV': 'development' }
     })
