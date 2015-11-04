@@ -36,7 +36,9 @@
     "gulp-nsp": "^0.4.5",
     "gulp-plumber": "^1.0.0",
     "isparta": "^3.0.3",
+    "mockgoose": "^4.0.2",
     "mongoose": "^4.1.12",
+    "should": "^7.1.1",
     "supertest": "^1.1.0",
     "winston": "^2.0.0"
   },
