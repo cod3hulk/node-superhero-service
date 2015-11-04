@@ -24,3 +24,5 @@ app.listen(port, err => {
   winston.info('Listening to: ' + 'http://localhost:3000');
 });
 
+module.exports = app;
+
